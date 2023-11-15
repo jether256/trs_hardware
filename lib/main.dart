@@ -1,13 +1,17 @@
 import 'dart:io';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:trs_hardware/login/regsiter.dart';
 import 'package:trs_hardware/main-navigation/dashboard.dart';
+import 'package:trs_hardware/main-navigation/home/home.dart';
+import 'package:trs_hardware/main-navigation/product/products.dart';
+import 'package:trs_hardware/providers/cartprovider.dart';
+import 'package:trs_hardware/providers/ordersprovider.dart';
+import 'package:trs_hardware/providers/productprovider.dart';
 import 'package:trs_hardware/splashscreen.dart';
 
-import 'constants/coloor.dart';
 import 'login/login.dart';
 
 Future<void> main() async {
@@ -25,7 +29,26 @@ Future<void> main() async {
 
 
 
-  runApp(const MyApp());
+  runApp(
+      MultiProvider(
+          providers: [
+
+
+            ChangeNotifierProvider(
+              create:(_) => ProductProvider(),
+            ),
+
+            ChangeNotifierProvider(
+              create:(_) => CartProvider(),
+            ),
+
+            ChangeNotifierProvider(
+              create:(_) => OrdersProvider(),
+            ),
+          ],
+          child:const MyApp()
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -40,13 +63,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor:Colors.brown),
         useMaterial3: false,
+          fontFamily: 'Gothic'
       ),
+      builder: EasyLoading.init(),
       initialRoute:SplashScreen.id,//initial route
       routes: {//routes
         SplashScreen.id:(context)=>const SplashScreen(),
         Login.id:(context)=>const Login(),
         Register.id:(context)=>const Register(),
         Dashboard.id:(context)=>const Dashboard(),
+        Products.id:(context)=>const Products(),
+        Home.id:(context)=>const Home()
       },
 
 

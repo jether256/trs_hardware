@@ -61,160 +61,158 @@ class _NavDrawerState extends State<NavDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: conBack2,
-      child: Expanded(
-        child: ListView(
-          padding: EdgeInsets.zero,
+      child: ListView(
+        padding: EdgeInsets.zero,
 
-          children: [
-            UserAccountsDrawerHeader(
-                accountName:Text('${nem}'),
-                accountEmail:Text('${email}'),
-              currentAccountPicture: const CircleAvatar(
-                child: ClipOval(
-                  child:Icon(Icons.person),
-                ),
-              ),
-              decoration:  BoxDecoration(
-                color: Colors.brown.withOpacity(0.2),
-                image:const DecorationImage(
-                  image: AssetImage('assets/images/ho.jpg'),
-                  fit: BoxFit.cover,
-                  opacity: 0.4,
-                ),
+        children: [
+          UserAccountsDrawerHeader(
+              accountName:Text('${nem}'),
+              accountEmail:Text('${email}'),
+            currentAccountPicture: const CircleAvatar(
+              child: ClipOval(
+                child:Icon(Icons.person),
               ),
             ),
-
-            ListTile(
-
-              leading: const Icon(Icons.dashboard_outlined,color: Colors.brown,),
-              title:const Text('Dashboard',style: TextStyle(color: Colors.white),),
-              onTap: (){
-
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>  const Dashboard(),
-                    )
-                );
-              },
+            decoration:  BoxDecoration(
+              color: Colors.brown.withOpacity(0.2),
+              image:const DecorationImage(
+                image: AssetImage('assets/images/ho.jpg'),
+                fit: BoxFit.cover,
+                opacity: 0.4,
+              ),
             ),
+          ),
 
-            //products
-            ExpansionTile(
-              backgroundColor: Colors.brown.shade100,
-              leading:Image.asset('assets/images/hammer.png',width: 30,),
-              title:const Text('Products',style: TextStyle(color: Colors.white),),
-              children: [
+          ListTile(
 
-                ListTile(
-                  title: const Center(child: Text('All Products',style: TextStyle(color: Colors.white),)),
-                  onTap: (){
+            leading: const Icon(Icons.dashboard_outlined,color: Colors.brown,),
+            title:const Text('Dashboard',style: TextStyle(color: Colors.white),),
+            onTap: (){
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>  const Products() ,
-                        )
-                    );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>  const Dashboard(),
+                  )
+              );
+            },
+          ),
 
-                  },
-                ),
+          //products
+          ExpansionTile(
+            backgroundColor: Colors.brown.shade100,
+            leading:Image.asset('assets/images/hammer.png',width: 30,),
+            title:const Text('Products',style: TextStyle(color: Colors.white),),
+            children: [
 
-                ListTile(
-                  title: const Center(child: Text('Add Product',style: TextStyle(color: Colors.white),)),
-                  onTap: (){
+              ListTile(
+                title: const Center(child: Text('All Products',style: TextStyle(color: Colors.white),)),
+                onTap: (){
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>  const addProduct() ,
-                        )
-                    );
-                  },
-                ),
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  const Products() ,
+                      )
+                  );
 
-              ],
-            ),
+                },
+              ),
 
-            //transactions
-            ExpansionTile(
-              backgroundColor: Colors.brown.shade100,
-              leading:Image.asset('assets/images/salary.png',width: 30,),
-              title:const Text('Transactions',style: TextStyle(color: Colors.white),),
-              children: [
+              ListTile(
+                title: const Center(child: Text('Add Product',style: TextStyle(color: Colors.white),)),
+                onTap: (){
 
-                ListTile(
-                  title: const Center(child: Text('All Transactions',style: TextStyle(color: Colors.white),)),
-                  onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  const addProduct() ,
+                      )
+                  );
+                },
+              ),
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>  const Products() ,
-                        )
-                    );
+            ],
+          ),
 
-                  },
-                ),
+          //transactions
+          ExpansionTile(
+            backgroundColor: Colors.brown.shade100,
+            leading:Image.asset('assets/images/salary.png',width: 30,),
+            title:const Text('Transactions',style: TextStyle(color: Colors.white),),
+            children: [
 
-                ListTile(
-                  title: const Center(child: Text('Product on Credit',style: TextStyle(color: Colors.white),)),
-                  onTap: (){
+              ListTile(
+                title: const Center(child: Text('All Transactions',style: TextStyle(color: Colors.white),)),
+                onTap: (){
 
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>  const addProduct() ,
-                        )
-                    );
-                  },
-                ),
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  const Products() ,
+                      )
+                  );
 
-              ],
-            ),
+                },
+              ),
 
-            //account
-            ListTile(
+              ListTile(
+                title: const Center(child: Text('Product on Credit',style: TextStyle(color: Colors.white),)),
+                onTap: (){
 
-              leading: const Icon(Icons.person,color: Colors.brown,),
-              title:const Text('Account',style: TextStyle(color: Colors.white),),
-              onTap: (){
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>  const addProduct() ,
+                      )
+                  );
+                },
+              ),
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>  const Account(),
-                    )
-                );
-              },
-            ),
+            ],
+          ),
 
-            ListTile(
+          //account
+          ListTile(
 
-              leading: const Icon(Icons.notifications,color: Colors.brown,),
-              title:const Text('Notifications',style: TextStyle(color: Colors.white),),
-              onTap: (){
+            leading: const Icon(Icons.person,color: Colors.brown,),
+            title:const Text('Account',style: TextStyle(color: Colors.white),),
+            onTap: (){
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>  const Account(),
-                    )
-                );
-              },
-            ),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>  const Account(),
+                  )
+              );
+            },
+          ),
 
-            ListTile(
+          ListTile(
 
-              leading: const Icon(Icons.notifications,color: Colors.brown,),
-              title:const Text('Log Out',style: TextStyle(color: Colors.white),),
-              onTap: (){
+            leading: const Icon(Icons.notifications,color: Colors.brown,),
+            title:const Text('Notifications',style: TextStyle(color: Colors.white),),
+            onTap: (){
 
-                lougOut();
-              },
-            ),
-          ],
-        ),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>  const Account(),
+                  )
+              );
+            },
+          ),
+
+          ListTile(
+
+            leading: const Icon(Icons.notifications,color: Colors.brown,),
+            title:const Text('Log Out',style: TextStyle(color: Colors.white),),
+            onTap: (){
+
+              lougOut();
+            },
+          ),
+        ],
       ),
     );
   }
