@@ -98,7 +98,7 @@ class _CartState extends State<Cart> {
                       opacity: 0.2,
                     ),
                   ),
-                  child: CartWidget()
+                  child: const CartWidget()
               ),
             ),
 

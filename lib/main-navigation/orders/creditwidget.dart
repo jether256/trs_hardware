@@ -8,6 +8,7 @@ import '../../constants/coloor.dart';
 import '../../encryp/enc.dart';
 import '../../providers/ordersprovider.dart';
 import '../dashboard.dart';
+import 'editorder.dart';
 import 'orderdetails/ordedetails.dart';
 
 class CreditWidget extends StatefulWidget {
@@ -34,6 +35,7 @@ class _CreditWidgetState extends State<CreditWidget> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
       Provider.of<OrdersProvider>(context,listen: false).getCredit();
+      Provider.of<OrdersProvider>(context,listen: false);
     });
   }
 
@@ -53,29 +55,29 @@ class _CreditWidgetState extends State<CreditWidget> {
 
           final pros=value.all;
 
-          if(value.isLoad){
+          // if(value.isLoad){
+          //
+          //   return  Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
+          //
+          //       const SizedBox(height: 20,),
+          //
+          //       const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
+          //     ],
+          //   );
+          //
+          // }
 
-            return  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
-
-                const SizedBox(height: 20,),
-
-                const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
-              ],
-            );
-
-          }
-
-          else if(value.isNet){
+           if(value.isNet){
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(child: Image.asset('assets/images/lost2.gif',height: 150,width: 150)),
+                Center(child: Image.asset('assets/images/no_internet.png',height: 150,width: 150)),
 
                 const SizedBox(height: 20,),
 
@@ -86,7 +88,7 @@ class _CreditWidgetState extends State<CreditWidget> {
 
           else{
 
-            return  pros.isEmpty ? Container(
+            return  pros.isEmpty ?  Container(
                 decoration: BoxDecoration(
                     color: Colors.brown.withOpacity(0.2),
                     image: const DecorationImage(
@@ -94,16 +96,7 @@ class _CreditWidgetState extends State<CreditWidget> {
                     )
                 ),
                 child: const Center(
-                  child:Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child:Text('There currently no credit sales',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),textAlign: TextAlign.center,) ,
-                      ),
-                    ],
-                  ),
+                  child:Text('There currently no credit sales',style: TextStyle(fontSize: 18),),
                 )
             ):ListView.builder(
                 itemCount: pros.length,
@@ -137,6 +130,28 @@ class _CreditWidgetState extends State<CreditWidget> {
                               onTap: (){
 
 
+                                // showModalBottomSheet(
+                                //     context: context,
+                                //     isScrollControlled:true,
+                                //     builder:(_)=> EditOrder(trid:pros[index].tr_id,tot:pros[index].c_am));
+
+
+                                // showCupertinoDialog(context: context, builder:(BuildContext context){
+                                //
+                                //   return CupertinoAlertDialog(
+                                //     insetAnimationDuration: const Duration(milliseconds: 100),
+                                //     title:const Text('Are you sure'),
+                                //     content: const Text('update status'),
+                                //     actions:  [
+                                //       CupertinoDialogAction(child:const Text('ok'),onPressed: (){
+                                //
+                                //         Navigator.pop(context);
+                                //
+                                //       },)
+                                //     ],
+                                //   );
+                                // });
+
                               },
                               child: CircleAvatar(
                                 backgroundColor: Colors.white,
@@ -166,7 +181,18 @@ class _CreditWidgetState extends State<CreditWidget> {
 
                           ),
                           ExpansionTile (
-                            title:const Text('More details...',style: TextStyle(color: Colors.black,fontSize: 12),),
+                            title:InkWell(
+                              onTap: (){
+
+                                showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled:true,
+                                    builder:(_)=> EditOrder(trid:pros[index].tr_id,tot:pros[index].c_am));
+
+                              },
+                                child: const Text('Edit',style: TextStyle(color: Colors.black,fontSize: 18),)
+                            ),
+                            subtitle:const Text('More details',style: TextStyle(color: Colors.black,fontSize: 12),) ,
                             children: [
 
                               Padding(

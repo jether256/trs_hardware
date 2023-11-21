@@ -94,14 +94,10 @@ class ProductProvider extends ChangeNotifier{
   }) async{
 
     try{
-      isLoad=true;
-      isNet=false;
 
 
       final response = await _api.delProo(context,id);
       _edit=response;
-      isLoad=false;
-      isNet=false;
       notifyListeners();
 
       getProList();

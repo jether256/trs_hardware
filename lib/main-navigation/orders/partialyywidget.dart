@@ -49,29 +49,29 @@ class _PartiallyPaidWidgetState extends State<PartiallyPaidWidget> {
 
           final pros=value.part;
 
-          if(value.isLoad){
+          // if(value.isLoad){
+          //
+          //   return  Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
+          //
+          //       const SizedBox(height: 20,),
+          //
+          //       const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
+          //     ],
+          //   );
+          //
+          // }
 
-            return  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
-
-                const SizedBox(height: 20,),
-
-                const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
-              ],
-            );
-
-          }
-
-          else if(value.isNet){
+           if(value.isNet){
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(child: Image.asset('assets/images/lost2.gif',height: 150,width: 150)),
+                Center(child: Image.asset('assets/images/no_internet.png',height: 150,width: 150)),
 
                 const SizedBox(height: 20,),
 
@@ -90,16 +90,7 @@ class _PartiallyPaidWidgetState extends State<PartiallyPaidWidget> {
                     )
                 ),
                 child: const Center(
-                  child:Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child:Text('There currently no credit sales',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),textAlign: TextAlign.center,) ,
-                      ),
-                    ],
-                  ),
+                  child:Text('There currently no partial payments',style: TextStyle(fontSize: 18),),
                 )
             ):ListView.builder(
                 itemCount: pros.length,

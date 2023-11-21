@@ -8,6 +8,7 @@ import '../../login/login.dart';
 import '../../providers/ordersprovider.dart';
 import '../cart/cartwidget.dart';
 import '../drawer/nava.dart';
+import '../search.dart';
 import 'creditwidget.dart';
 import 'fullypaidwidget.dart';
 
@@ -66,14 +67,25 @@ class _OrdersState extends State<Orders> {
   @override
   Widget build(BuildContext context) {
     return  DefaultTabController(
-      length: 3,
+      length: 2,
       child: Scaffold(
         drawer:const NavDrawer(),
         appBar:AppBar(
           backgroundColor: Colors.brown.shade300,
           actions: [
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: const EdgeInsets.only(left: 14.0,right: 14.0),
+              child: InkWell(
+                child:const Icon(Icons.search,color: Colors.white),
+                onTap: (){
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Search()));
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 14.0,right: 14.0),
               child: InkWell(
                 child:const Icon(Icons.logout,color: Colors.white),
                 onTap: (){
@@ -110,28 +122,28 @@ class _OrdersState extends State<Orders> {
                 text: "Credit Sales",
 
               ),
-               Tab(
-                icon: Consumer<OrdersProvider>(
-                    builder: (context,value,child) {
-                      final count = value.countPart;
-
-                      // if(value.isLoad){
-                      //
-                      //   return const Badge(
-                      //         label: Text('0', style: TextStyle(color: Colors.white,
-                      //             fontSize: 10),),
-                      //         child: Icon(Icons.credit_card, color: Colors.white),
-                      //       );
-                      // }
-                      return  Badge(
-                        label:count== null ?  const Text('0', style: TextStyle(color: Colors.white,
-                            fontSize: 10),):Text('$count',style: const TextStyle(color: Colors.white,fontSize: 10),),
-                        child: const Icon(Icons.shopping_bag, color: Colors.white),
-                      );
-
-                    }),
-                text: "Partially Paid ",
-              ),
+              //  Tab(
+              //   icon: Consumer<OrdersProvider>(
+              //       builder: (context,value,child) {
+              //         final count = value.countPart;
+              //
+              //         // if(value.isLoad){
+              //         //
+              //         //   return const Badge(
+              //         //         label: Text('0', style: TextStyle(color: Colors.white,
+              //         //             fontSize: 10),),
+              //         //         child: Icon(Icons.credit_card, color: Colors.white),
+              //         //       );
+              //         // }
+              //         return  Badge(
+              //           label:count== null ?  const Text('0', style: TextStyle(color: Colors.white,
+              //               fontSize: 10),):Text('$count',style: const TextStyle(color: Colors.white,fontSize: 10),),
+              //           child: const Icon(Icons.shopping_bag, color: Colors.white),
+              //         );
+              //
+              //       }),
+              //   text: "Partially Paid ",
+              // ),
               Tab(
                 icon: Consumer<OrdersProvider>(
                     builder: (context,value,child) {
@@ -160,7 +172,7 @@ class _OrdersState extends State<Orders> {
         body: const TabBarView(
           children: [
             CreditWidget(),
-            PartiallyPaidWidget(),
+            // PartiallyPaidWidget(),
             FullPaidWidget(),
           ],
         ),

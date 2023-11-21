@@ -33,6 +33,8 @@ class _CreditFormState extends State<CreditForm> {
 
     if(pickDate != null){
 
+
+
       String formattedDate = DateFormat('yyyy-MM-dd').format(pickDate);
 
 
@@ -47,8 +49,12 @@ class _CreditFormState extends State<CreditForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
-      padding: const EdgeInsets.all(20),
+      height: MediaQuery.of(context).size.height * 0.5,
+      padding:  const EdgeInsets.all(20),
+      decoration:  BoxDecoration(
+        color: Colors.brown.withOpacity(0.7),
+        // borderRadius:const BorderRadius.only(topLeft: Radius.circular(8),topRight: Radius.circular(8))
+      ),
       child: SingleChildScrollView(
         child: Column(
           children: [
@@ -56,7 +62,7 @@ class _CreditFormState extends State<CreditForm> {
             TextFormField(
               controller: _name,
               decoration: const InputDecoration(
-                labelText: 'Name of Business/Owner'
+                labelText: 'Name of Business/Owner',
               ),
             ),
 
@@ -65,7 +71,8 @@ class _CreditFormState extends State<CreditForm> {
            Row(
             children: [
               Expanded(
-                  child:Text(_date != null ? _date.toString():'Select Date'),
+                 // child:Text(_date != null ? DateFormat('MMMM dd,yyyy').format(_date!):'Select Date'),
+                  child:Text(_date != null ? DateFormat('dd/MM/yyyy').format(_date!):'Select Payment Date'),
               ),
               IconButton(icon:const Icon(Icons.calendar_month), onPressed: ()=>_pickDate(),),
             ],
@@ -86,18 +93,14 @@ class _CreditFormState extends State<CreditForm> {
                       auth.confirmm(
                           context: context,
                           name:_name.text,
-                          date:_date.toString(),
-                      );
+                          date:DateFormat('yyyy/MM/dd').format(_date!),
+                          //date:_date.toString(),
 
-                    }else{
+                      ).whenComplete((value){
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: const Text("Please enter name and date"),
-                            backgroundColor: Colors.red.withOpacity(0.9),
-                            elevation: 10, //shadow
-                          )
-                      );
+                        context.read<CartProvider>().getTotal();
+
+                      });
 
                     }
 

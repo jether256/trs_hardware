@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/productprovider.dart';
+import '../drawer/nava.dart';
 class addProduct extends StatefulWidget {
   const addProduct({super.key});
 
@@ -38,6 +39,7 @@ class _addProductState extends State<addProduct> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:const NavDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.brown.shade300,
         title: const Text('Add Product',style: TextStyle(color: Colors.white),),
@@ -48,23 +50,6 @@ class _addProductState extends State<addProduct> {
           )
 
         ],
-        // bottom:PreferredSize(
-        //   preferredSize: const Size.fromHeight(50),
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(8.0),
-        //     child: TextField(
-        //       decoration: InputDecoration(
-        //         border:OutlineInputBorder(
-        //           borderRadius: BorderRadius.circular(4),
-        //           borderSide: BorderSide.none
-        //         ),
-        //         filled: true,
-        //         fillColor: Colors.brown.shade50
-        //       ),
-        //     ),
-        //   ),
-        // ),
-
       ),
       body:ListView(
         padding: const EdgeInsets.only(left: 10,right: 10,top: 10),

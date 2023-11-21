@@ -51,15 +51,24 @@ class CartProvider extends ChangeNotifier{
   }) async{
 
     try{
-      isLoad=true;
-      isNet=false;
-      notifyListeners();
+      // isLoad=true;
+      // isNet=false;
+      // notifyListeners();
 
 
       final response = await _api.Konfirm(context,name,date);
       _confirm=response;
-      isLoad=false;
-      isNet=false;
+      // isLoad=false;
+      // isNet=false;
+      notifyListeners();
+
+      getTotal();
+      notifyListeners();
+
+      getCartCount();
+      notifyListeners();
+
+      getCart();
       notifyListeners();
 
     }catch(e){
@@ -145,9 +154,16 @@ class CartProvider extends ChangeNotifier{
   getTotal() async {
 
       final response = await _api.getCartTotal();
-        _sumPrice  = response;
+
+      if(response != null) {
+        _sumPrice = response;
         notifyListeners();
 
+        getCart();
+        notifyListeners();
+      }else{
+        _sumPrice=0;
+      }
   }
 
 
@@ -156,8 +172,13 @@ class CartProvider extends ChangeNotifier{
   getCartCount() async{
 
       final response= await _api.getCount();
-      _count=response;
-      notifyListeners();
+
+      if(response != null) {
+        _count = response;
+        notifyListeners();
+      }else{
+        _count=0;
+      }
 
   }
 

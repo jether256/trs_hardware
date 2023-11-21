@@ -29,6 +29,15 @@ class BaseUrl{
   static String getCreditOrder= "https://$address/api/orders/getOrder.php";
   static String getPartOrder= "https://$address/api/orders/getPartOrder.php";
   static String getFullOrder= "https://$address/api/orders/getFullOrder.php";
+  static String getOrders= "https://$address/api/orders/getAllOrders.php";
+
+  static String editOrders= "https://$address/api/orders/editOrder.php";
+
+  static String editFull= "https://$address/api/orders/editFull.php";
+  static String editPart= "https://$address/api/api/orders/editPart.php";
+  static String searchOrder= "https://$address/api/orders/searchorders.php";
+
+  static String date= "https://$address/api/orders/date.php";
 
 
   static String getOrderDe= "https://$address/api/orders/oderDetails.php";

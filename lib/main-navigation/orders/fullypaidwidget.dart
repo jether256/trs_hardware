@@ -48,29 +48,29 @@ class _FullPaidWidgetState extends State<FullPaidWidget> {
 
           final pros=value.paid;
 
-          if(value.isLoad){
+          // if(value.isLoad){
+          //
+          //   return  Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     children: [
+          //       Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
+          //
+          //       const SizedBox(height: 20,),
+          //
+          //       const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
+          //     ],
+          //   );
+          //
+          // }
 
-            return  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
-
-                const SizedBox(height: 20,),
-
-                const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
-              ],
-            );
-
-          }
-
-          else if(value.isNet){
+           if(value.isNet){
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(child: Image.asset('assets/images/lost2.gif',height: 150,width: 150)),
+                Center(child: Image.asset('assets/images/no_internet.png',height: 150,width: 150)),
 
                 const SizedBox(height: 20,),
 
@@ -89,16 +89,7 @@ class _FullPaidWidgetState extends State<FullPaidWidget> {
                     )
                 ),
                 child: const Center(
-                  child:Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                        child:Text('There currently no credit sales',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),textAlign: TextAlign.center,) ,
-                      ),
-                    ],
-                  ),
+                  child:Text('There currently no full payments',style: TextStyle(fontSize: 18),),
                 )
             ):ListView.builder(
                 itemCount: pros.length,
@@ -106,7 +97,7 @@ class _FullPaidWidgetState extends State<FullPaidWidget> {
                   var s_price=int.parse(pros[index].c_am);
                   String sprice=_formated.format(s_price);
 
-                  var s_pricee=int.parse(pros[index].bal);
+                  var bal=int.parse(pros[index].c_am)-int.parse(pros[index].bal);
                   String spricee=_formated.format(s_price);
 
                   return Padding(
@@ -185,7 +176,7 @@ class _FullPaidWidgetState extends State<FullPaidWidget> {
                                           children: [
                                             const Text('Balance: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
 
-                                            Flexible(child: Text('Shs${spricee}',style: const TextStyle(color: Colors.black),maxLines: 2,))
+                                            Flexible(child: Text('Shs ${int.parse(pros[index].c_am)-int.parse(pros[index].bal)}',style: const TextStyle(color: Colors.black),maxLines: 2,))
                                           ],
                                         ),
 

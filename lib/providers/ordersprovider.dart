@@ -13,6 +13,10 @@ class OrdersProvider extends ChangeNotifier{
   bool isNet=false;
 
 
+  List<OrderModel> _datee=[];
+  List<OrderModel> get datee => _datee;
+
+
   List<OrderModel> _all=[];
   List<OrderModel> get all => _all;
 
@@ -29,6 +33,8 @@ class OrdersProvider extends ChangeNotifier{
   List<OderDetailsModel> _details=[];
   List<OderDetailsModel> get details => _details;
 
+  Map<String,dynamic>? _confirm;
+  Map<String,dynamic>? get confirm => _confirm;
 
 
 
@@ -114,11 +120,13 @@ class OrdersProvider extends ChangeNotifier{
 
     try {
       isNet = false;
-      // isLoad = true;
+      isLoad = true;
       notifyListeners();
 
       final response = await _api.getCreditOrders();
       _all = response!;
+      isNet=false;
+      isLoad=false;
       notifyListeners();
 
       getallCreditCount();
@@ -129,6 +137,13 @@ class OrdersProvider extends ChangeNotifier{
 
       getallPartCount();
       notifyListeners();
+
+      getFull();
+      notifyListeners();
+
+      getPart();
+      notifyListeners();
+
 
     }on SocketException catch (_) {
       isLoad = false;
@@ -150,11 +165,13 @@ class OrdersProvider extends ChangeNotifier{
 
     try {
       isNet = false;
-      // isLoad = true;
+       isLoad = true;
       notifyListeners();
 
       final response = await _api.getPartOrders();
       _part = response!;
+      isNet=false;
+      isLoad=false;
       notifyListeners();
 
       getallCreditCount();
@@ -187,12 +204,15 @@ class OrdersProvider extends ChangeNotifier{
 
     try {
       isNet = false;
-      // isLoad = true;
+      isLoad = true;
       notifyListeners();
 
       final response = await _api.getFullPaidOrders();
       _paid = response!;
+      isNet=false;
+      isLoad=false;
       notifyListeners();
+
 
       getallCreditCount();
       notifyListeners();
@@ -202,6 +222,13 @@ class OrdersProvider extends ChangeNotifier{
 
       getallPartCount();
       notifyListeners();
+
+      getCredit();
+      notifyListeners();
+
+      getPart();
+      notifyListeners();
+
 
     }on SocketException catch (_) {
       isLoad = false;
@@ -217,5 +244,226 @@ class OrdersProvider extends ChangeNotifier{
 
 
   }
+
+  ///get order details
+  getDetails(String trid) async {
+
+    try {
+      isNet = false;
+      // isLoad = true;
+      notifyListeners();
+
+      final response = await _api.getOderDetails(trid);
+      _details = response!;
+      notifyListeners();
+
+
+    }on SocketException catch (_) {
+      isLoad = false;
+      isNet = true;
+      notifyListeners();
+
+    }catch(e){
+      isLoad = false;
+      isNet = false;
+      notifyListeners();
+
+    }
+
+
+  }
+
+
+  alertDialog({context,title,content}){
+
+    showCupertinoDialog(context: context, builder:(BuildContext context){
+
+      return CupertinoAlertDialog(
+        title:Text(title),
+        content: Text(content),
+        actions:  [
+          CupertinoDialogAction(child:const Text('ok'),onPressed: (){
+
+            Navigator.pop(context);
+          },)
+        ],
+      );
+    });
+  }
+
+  ///edit Order
+  editO({
+    required BuildContext context, required String trid, required String bal
+  }) async{
+
+    try{
+      isLoad=true;
+      isNet=false;
+      notifyListeners();
+
+
+      final response = await _api.EditOrder(context,trid,bal);
+      _confirm=response;
+      isLoad=false;
+      isNet=false;
+      notifyListeners();
+
+      getallCreditCount();
+      notifyListeners();
+
+      getallPaidCount();
+      notifyListeners();
+
+      getallPartCount();
+      notifyListeners();
+
+      getCredit();
+      notifyListeners();
+
+      getPart();
+      notifyListeners();
+
+      getFull();
+      notifyListeners();
+
+
+
+
+    }catch(e){
+
+      isLoad=false;
+      isNet=false;
+      notifyListeners();
+
+    }
+
+  }
+
+
+
+  ///edit full
+  editF({
+    required BuildContext context, required String trid, required String bal
+  }) async{
+
+    try{
+      isLoad=true;
+      isNet=false;
+      notifyListeners();
+
+
+      final response = await _api.EdittF(context,trid,bal);
+      _confirm=response;
+      isLoad=false;
+      isNet=false;
+      notifyListeners();
+
+      getallCreditCount();
+      notifyListeners();
+
+      getallPaidCount();
+      notifyListeners();
+
+      getallPartCount();
+      notifyListeners();
+
+      getCredit();
+      notifyListeners();
+
+      getPart();
+      notifyListeners();
+
+      getFull();
+      notifyListeners();
+
+
+
+
+    }catch(e){
+
+      isLoad=false;
+      isNet=false;
+      notifyListeners();
+
+    }
+
+  }
+
+
+  ///edit part
+  editP({
+    required BuildContext context, required String trid, required String bal
+  }) async{
+
+    try{
+      isLoad=true;
+      isNet=false;
+      notifyListeners();
+
+
+      final response = await _api.EdittP(context,trid,bal);
+      _confirm=response;
+      isLoad=false;
+      isNet=false;
+      notifyListeners();
+
+      getallCreditCount();
+      notifyListeners();
+
+      getallPaidCount();
+      notifyListeners();
+
+      getallPartCount();
+      notifyListeners();
+
+      getCredit();
+      notifyListeners();
+
+      getPart();
+      notifyListeners();
+
+      getFull();
+      notifyListeners();
+
+    }catch(e){
+
+      isLoad=false;
+      isNet=false;
+      notifyListeners();
+
+    }
+
+  }
+
+
+  ///get date list
+  getDate({required String date}) async {
+
+    try {
+      isNet = false;
+      // isLoad = true;
+      notifyListeners();
+
+      final response = await _api.getDateList(date);
+      _datee = response!;
+      notifyListeners();
+
+
+    }on SocketException catch (_) {
+      isLoad = false;
+      isNet = true;
+      notifyListeners();
+
+    }catch(e){
+      isLoad = false;
+      isNet = false;
+      notifyListeners();
+
+    }
+
+
+  }
+
+
 
 }

@@ -5,6 +5,7 @@ import 'package:trs_hardware/main-navigation/product/editPro.dart';
 
 import '../../encryp/enc.dart';
 import '../../providers/productprovider.dart';
+import '../drawer/nava.dart';
 import 'addpro.dart';
 
 class Products extends StatefulWidget {
@@ -36,6 +37,7 @@ class _ProductsState extends State<Products> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer:const NavDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.brown.shade300,
         title: const Text('All Products',style: TextStyle(color: Colors.white),),
@@ -49,22 +51,22 @@ class _ProductsState extends State<Products> {
             icon:const Icon(Icons.add),
           )
         ],
-        bottom:PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                border:OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                  borderSide: BorderSide.none
-                ),
-                filled: true,
-                fillColor: Colors.brown.shade50
-              ),
-            ),
-          ),
-        ),
+        // bottom:PreferredSize(
+        //   preferredSize: const Size.fromHeight(50),
+        //   child: Padding(
+        //     padding: const EdgeInsets.all(8.0),
+        //     child: TextField(
+        //       decoration: InputDecoration(
+        //         border:OutlineInputBorder(
+        //           borderRadius: BorderRadius.circular(4),
+        //           borderSide: BorderSide.none
+        //         ),
+        //         filled: true,
+        //         fillColor: Colors.brown.shade50
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ),
       body:RefreshIndicator(
         onRefresh: () async{
@@ -130,7 +132,7 @@ class _ProductsState extends State<Products> {
                               color:Colors.grey.shade300,
                               borderRadius: BorderRadius.circular(4)
                           ),
-                          child:Image.asset('assets/images/lost2.gif'),
+                          child:Image.asset('assets/images/no_internet.png'),
                         ),
                       );
 

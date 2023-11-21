@@ -1,8 +1,9 @@
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trs_hardware/main-navigation/home/searchhome.dart';
 
 import '../../encryp/enc.dart';
 import '../../providers/cartprovider.dart';
@@ -61,6 +62,19 @@ class _HomeState extends State<Home> {
         appBar: AppBar(
           backgroundColor: Colors.brown.shade300,
           title:const Text('Home',style: TextStyle(color: Colors.white),),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(left: 14.0,right: 14.0),
+              child: InkWell(
+                child:const Icon(Icons.search,color: Colors.white),
+                onTap: (){
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const SearchProduct()));
+                },
+              ),
+            ),
+          ],
         ),
       body:RefreshIndicator(
         onRefresh: () async{
@@ -83,56 +97,30 @@ class _HomeState extends State<Home> {
 
               if(value.isLoad){
 
-                return GridView.builder(
-                    gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount:2,
-                      childAspectRatio: 1/1,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemBuilder:(context,index){
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
 
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color:Colors.brown.shade100,
-                              borderRadius: BorderRadius.circular(4)
-                          ),
-                          child:Image.asset('assets/images/hug.gif'),
-                        ),
-                      );
+                    const SizedBox(height: 20,),
 
-
-
-                    }
+                    const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
+                  ],
                 );
 
               }else if(value.isNet){
 
-                return GridView.builder(
-                    gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount:2,
-                      childAspectRatio: 1/1,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemBuilder:(context,index){
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Center(child: Image.asset('assets/images/lost2.gif',height: 150,width: 150)),
 
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color:Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(4)
-                          ),
-                          child:Image.asset('assets/images/lost2.gif'),
-                        ),
-                      );
+                    const SizedBox(height: 20,),
 
-
-
-                    }
+                    const Text('No internet Connection',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
+                  ],
                 );
 
               }

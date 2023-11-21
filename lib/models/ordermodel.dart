@@ -25,7 +25,7 @@ class OrderModel{
     return   OrderModel(
       id:data['id'],
       user_id:data['user_id'],
-      date: data['date'],
+      date: data['datee'],
       pay_d: data['payment_date'],
       c_am: data['credit_amount'],
       tr_id: data['transaction_id'],
@@ -39,7 +39,7 @@ class OrderModel{
   Map<String, dynamic> toJson() => {
     "id": id,
     "user_id":user_id,
-    "date":date,
+    "datee":date,
     "payment_date":pay_d,
     "credit_amount":c_am,
     "transaction_id":tr_id,

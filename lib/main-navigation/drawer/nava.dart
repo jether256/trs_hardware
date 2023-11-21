@@ -5,7 +5,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../constants/coloor.dart';
 import '../../login/login.dart';
 import '../account/account.dart';
+import '../account/editaacount.dart';
 import '../dashboard.dart';
+import '../orders/orders.dart';
 import '../product/addpro.dart';
 import '../product/products.dart';
 
@@ -136,41 +138,58 @@ class _NavDrawerState extends State<NavDrawer> {
           ),
 
           //transactions
-          ExpansionTile(
-            backgroundColor: Colors.brown.shade100,
+
+          ListTile(
+
             leading:Image.asset('assets/images/salary.png',width: 30,),
-            title:const Text('Transactions',style: TextStyle(color: Colors.white),),
-            children: [
+            title:const Text('Orders',style: TextStyle(color: Colors.white),),
+            onTap: (){
 
-              ListTile(
-                title: const Center(child: Text('All Transactions',style: TextStyle(color: Colors.white),)),
-                onTap: (){
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>  const Products() ,
-                      )
-                  );
-
-                },
-              ),
-
-              ListTile(
-                title: const Center(child: Text('Product on Credit',style: TextStyle(color: Colors.white),)),
-                onTap: (){
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>  const addProduct() ,
-                      )
-                  );
-                },
-              ),
-
-            ],
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>  const Orders(),
+                  )
+              );
+            },
           ),
+
+
+          // ExpansionTile(
+          //   backgroundColor: Colors.brown.shade100,
+          //   leading:Image.asset('assets/images/salary.png',width: 30,),
+          //   title:const Text('Transactions',style: TextStyle(color: Colors.white),),
+          //   children: [
+          //
+          //     ListTile(
+          //       title: const Center(child: Text('All Transactions',style: TextStyle(color: Colors.white),)),
+          //       onTap: (){
+          //
+          //         Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //               builder: (context) =>  const Products() ,
+          //             )
+          //         );
+          //
+          //       },
+          //     ),
+          //
+          //     ListTile(
+          //       title: const Center(child: Text('Product on Credit',style: TextStyle(color: Colors.white),)),
+          //       onTap: (){
+          //
+          //         Navigator.push(
+          //             context,
+          //             MaterialPageRoute(
+          //               builder: (context) =>  const addProduct() ,
+          //             )
+          //         );
+          //       },
+          //     ),
+          //
+          //   ],
+          // ),
 
           //account
           ListTile(
@@ -182,7 +201,7 @@ class _NavDrawerState extends State<NavDrawer> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>  const Account(),
+                    builder: (context) =>  const EditAccount(),
                   )
               );
             },

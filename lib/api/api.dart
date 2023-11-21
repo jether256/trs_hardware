@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trs_hardware/main-navigation/dashboard.dart';
 import 'package:trs_hardware/main-navigation/product/products.dart';
@@ -10,8 +11,10 @@ import 'dart:convert';
 import '../encryp/enc.dart';
 import 'package:trs_hardware/api/url/url.dart';
 
+import '../main-navigation/cart/getCart.dart';
 import '../main-navigation/home/home.dart';
 import '../models/cartmodel.dart';
+import '../models/orderdetailsmodel.dart';
 import '../models/ordermodel.dart';
 import '../models/productmodel.dart';
 
@@ -414,7 +417,8 @@ Future<List<ProductModel>?> getPro() async {
       body:{
         "uid": ID,
         "date": date,
-        "name":name
+        "name":name,
+        "now":DateFormat('yyyy/MM/dd').format(DateTime.now())
       }
       ,
     );
@@ -436,8 +440,9 @@ Future<List<ProductModel>?> getPro() async {
               )
           );
 
-          Navigator.pushReplacementNamed(context,Dashboard.id);
-
+          //Navigator.pushReplacementNamed(context,Dashboard.id);
+          //Navigator.pushReplacementNamed(context,Cart.id);
+          Navigator.pop(context);
         }
 
         EasyLoading.dismiss(animation: true);
@@ -611,6 +616,270 @@ Future<List<ProductModel>?> getPro() async {
         Uri.parse(BaseUrl.getFullOrder),
         headers: {"Accept": "headers/json"},
         body:{'id':ID!}
+    );
+
+    if (response.statusCode == 200) {
+      return orderFromJson(
+          json.decode(response.body)
+      );
+    } else {
+      return null;
+    }
+  }
+
+
+  ///get order details
+  Future<List<OderDetailsModel>?> getOderDetails( String trid) async {
+
+
+    var response = await http.post(
+        Uri.parse(BaseUrl.getOrderDe),
+        headers: {"Accept": "headers/json"},
+        body:{'trans':trid}
+    );
+
+    if (response.statusCode == 200) {
+      return orderdetailsFromJson(
+          json.decode(response.body)
+      );
+    } else {
+      return null;
+    }
+  }
+
+
+  ///edit full
+  Future<Map<String,dynamic>?> EdittF(BuildContext context, String trid, String bal) async{
+
+
+
+
+    var response = await http.post(
+      Uri.parse(BaseUrl.editFull),
+      headers: {"Accept": "headers/json"},
+      body:{
+        "trid":trid,
+        "bal":bal,
+      }
+      ,
+    );
+
+    if (response.statusCode == 200) {
+
+      var userData = json.decode(response.body);
+
+      if (userData == "full") {
+
+        if(context.mounted){
+
+
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: const Text("Order edited successfully"),
+          //       backgroundColor: Colors.brown.withOpacity(0.9),
+          //       elevation: 10, //shadow
+          //     )
+          // );
+
+          Navigator.pushReplacementNamed(context,Dashboard.id);
+          Navigator.pop(context);
+
+        }
+
+
+      }else{
+
+
+        if(context.mounted){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("failed to placed on"),
+                backgroundColor: Colors.red.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+          Navigator.pop(context);
+        }
+
+
+
+        print(userData);
+
+
+      }
+    }else{
+
+      return null;
+    }
+    return null;
+
+  }
+
+  ///edit part
+  Future<Map<String,dynamic>?> EdittP(BuildContext context, String trid, String bal) async{
+
+
+
+
+
+    var response = await http.post(
+      Uri.parse(BaseUrl.editPart),
+      headers: {"Accept": "headers/json"},
+      body:{
+        "trid":trid,
+        "bal":bal,
+      }
+      ,
+    );
+
+    if (response.statusCode == 200) {
+
+      var userData = json.decode(response.body);
+
+      if (userData == "part") {
+
+        if(context.mounted){
+
+          //
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //     SnackBar(
+          //       content: const Text("Order edited successfully"),
+          //       backgroundColor: Colors.brown.withOpacity(0.9),
+          //       elevation: 10, //shadow
+          //     )
+          // );
+
+          Navigator.pushReplacementNamed(context,Dashboard.id);
+          Navigator.pop(context);
+
+        }
+
+
+      }else{
+
+
+        if(context.mounted){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("failed to placed on"),
+                backgroundColor: Colors.red.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+          Navigator.pop(context);
+        }
+
+
+
+        print(userData);
+
+
+      }
+    }else{
+
+      return null;
+    }
+    return null;
+
+  }
+
+
+  ///edit order
+  Future<Map<String,dynamic>?> EditOrder(BuildContext context,String trid,String bal) async{
+
+
+
+    SharedPreferences pref= await SharedPreferences.getInstance();
+    String? ID=pref.getString('ID');
+
+    var response = await http.post(
+      Uri.parse(BaseUrl.editOrders),
+      headers: {"Accept": "headers/json"},
+      body:{
+        "trid":trid,
+        "bal": bal,
+      }
+      ,
+    );
+
+    if (response.statusCode == 200) {
+
+      var userData = json.decode(response.body);
+
+      if (userData == "full") {
+
+        if(context.mounted){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Order placed successfully"),
+                backgroundColor: Colors.brown.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+
+
+          Navigator.pushReplacementNamed(context,Dashboard.id);
+
+          Navigator.pop(context);
+        }
+
+
+      }else{
+
+
+        if(context.mounted){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("failed to placed on"),
+                backgroundColor: Colors.red.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+          Navigator.pop(context);
+        }
+
+
+
+        print(userData);
+
+
+      }
+    }else{
+
+      return null;
+    }
+    return null;
+
+  }
+
+
+
+
+  ///get date Lists
+  Future<List<OrderModel>?> getDateList(String date) async {
+
+    SharedPreferences pref= await SharedPreferences.getInstance();
+    String? ID=pref.getString('ID');
+
+    var response = await http.post(
+        Uri.parse(BaseUrl.date),
+        headers: {"Accept": "headers/json"},
+        body:{
+          'uid':ID!,
+          'date':date
+        }
     );
 
     if (response.statusCode == 200) {

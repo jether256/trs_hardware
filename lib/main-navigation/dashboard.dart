@@ -90,7 +90,7 @@ class _DashboardState extends State<Dashboard> {
     const Home(),
     const Cart(),
     const Orders(),
-    const Account(),
+    //const Account(),
   ];
 
   void _onItemTapped(int index){
@@ -168,13 +168,13 @@ class _DashboardState extends State<Dashboard> {
 
 
 
-            IconButton(
-                onPressed: () {
-
-                  _onItemTapped(3);
-                },
-                icon:Icon(_selectedIndex== 3 ? CupertinoIcons.person:Icons.person,color:_selectedIndex== 3 ? Colors.brown.shade50:Colors.brown,size: _selectedIndex == 3 ? 30:23)
-            ),
+            // IconButton(
+            //     onPressed: () {
+            //
+            //       _onItemTapped(3);
+            //     },
+            //     icon:Icon(_selectedIndex== 3 ? CupertinoIcons.person:Icons.person,color:_selectedIndex== 3 ? Colors.brown.shade50:Colors.brown,size: _selectedIndex == 3 ? 30:23)
+            // ),
 
           ],
         ),

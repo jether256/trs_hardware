@@ -14,8 +14,9 @@ class OderDetailsModel{
   final String price;
   final String quantity;
   final String oderid;
+  final String name;
 
-  OderDetailsModel( {required this.id, required this.price, required this.quantity, required this.oderid,required this.proid, });
+  OderDetailsModel({required this.id, required this.price, required this.quantity, required this.oderid,required this.proid, required this.name,  });
 
   factory OderDetailsModel.fromJson(data){
     return   OderDetailsModel(
@@ -24,6 +25,7 @@ class OderDetailsModel{
       price: data['price'],
       quantity: data['quantity'],
       oderid: data['order_id'],
+      name: data['name']
     );
   }
 
@@ -34,6 +36,7 @@ class OderDetailsModel{
     "price":price,
     "quantity":quantity,
     "order_id":oderid,
+    "name":name
   };
 
 
