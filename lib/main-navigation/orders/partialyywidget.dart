@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:trs_hardware/main-navigation/orders/editorders/editpart.dart';
 
 import '../../providers/ordersprovider.dart';
+import 'editorders/editorder.dart';
 import 'orderdetails/ordedetails.dart';
 
 class PartiallyPaidWidget extends StatefulWidget {
@@ -99,7 +101,7 @@ class _PartiallyPaidWidgetState extends State<PartiallyPaidWidget> {
                   String sprice=_formated.format(s_price);
 
                   var s_pricee=int.parse(pros[index].bal);
-                  String spricee=_formated.format(s_price);
+                  String spricee=_formated.format(s_pricee);
 
                   return Padding(
                     padding: const EdgeInsets.only(left: 8.0,right: 8.0,bottom:3,top: 3),
@@ -146,14 +148,25 @@ class _PartiallyPaidWidgetState extends State<PartiallyPaidWidget> {
 
                                 Text('Order ID:${pros[index].tr_id}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
 
-                                Text('Date:${pros[index].date}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                               // Text('Date:${pros[index].date}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                                 Text('Amount:Shs${sprice}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                               ],
                             ),
 
                           ),
                           ExpansionTile (
-                            title:const Text('More details...',style: TextStyle(color: Colors.black,fontSize: 12),),
+                            title:InkWell(
+                                onTap: (){
+
+                                  showModalBottomSheet(
+                                      context: context,
+                                      isScrollControlled:true,
+                                      builder:(_)=> EditOrderPart(trid:pros[index].tr_id,tot:pros[index].c_am,bal:pros[index].bal));
+
+                                },
+                                child: const Text('Edit',style: TextStyle(color: Colors.black,fontSize: 18),)
+                            ),
+                            subtitle:const Text('More details',style: TextStyle(color: Colors.black,fontSize: 12),) ,
                             children: [
 
                               Padding(
@@ -165,13 +178,13 @@ class _PartiallyPaidWidgetState extends State<PartiallyPaidWidget> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
-                                        Row(
-                                          children: [
-                                            const Text('Payment Date: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-
-                                            Text( pros[index].pay_d,style: const TextStyle(color: Colors.black),)
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   children: [
+                                        //     const Text('Payment Date: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                        //
+                                        //     Text( pros[index].pay_d,style: const TextStyle(color: Colors.black),)
+                                        //   ],
+                                        // ),
 
                                         Row(
                                           children: [

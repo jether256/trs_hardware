@@ -4,18 +4,19 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../providers/ordersprovider.dart';
+import '../../../providers/ordersprovider.dart';
 
-class EditOrder extends StatefulWidget {
+class EditOrderPart extends StatefulWidget {
   final String trid;
   final String tot;
-  const EditOrder({super.key,required this.trid, required this.tot,});
+  final String bal;
+  const EditOrderPart({super.key,required this.trid, required this.tot, required this.bal});
 
   @override
-  State<EditOrder> createState() => _EditOrderState();
+  State<EditOrderPart> createState() => _EditOrderPartState();
 }
 
-class _EditOrderState extends State<EditOrder> {
+class _EditOrderPartState extends State<EditOrderPart> {
 
   final _formKey=GlobalKey<FormState>();
 
@@ -119,36 +120,59 @@ class _EditOrderState extends State<EditOrder> {
 
                     return   ElevatedButton.icon(onPressed:(){
 
+                      // full payment
+                      if(_am.text != null  && int.parse(_am.text) == int.parse(widget.bal)){
 
-                      // if(_am.text != null && selectedOption != null){
-                        if(_am.text != null  && int.parse(_am.text) == int.parse(widget.tot)){
-                       //
-                          auth.editO(
-                                    context: context,
-                                   trid:widget.trid,
-                                    bal:_am.text,
-                                ).then((value){
+                        var bal1= (int.parse(widget.bal)-int.parse(_am.text));
 
-                            Navigator.pop(context);
-
-                          });
-
-                         //var net =int.parse(widget.tot)- int.parse(_am.text);
-
-
-                      }else{
+                        auth.editO(
+                          context: context,
+                          trid:widget.trid,
+                          bal:bal1.toString(),
+                        ).then((value){
 
                           Navigator.pop(context);
-                        }
+
+                        });
+
+                      }
+
+                      //part payment
+                       else if(_am.text != null  && int.parse(_am.text) < int.parse(widget.bal)){
+
+
+                          var balo= (int.parse(widget.bal) - int.parse(_am.text));
+
+                        // print(balo);
+                        // print(_am.text);
+                        // print('This is partial payment');
+                        //
+                        auth.editP2(
+                          context: context,
+                          trid:widget.trid,
+                          bal:balo.toString(),
+                        ).then((value){
+                          Navigator.pop(context);
+                        });
+
+                        //var net =int.parse(widget.tot)- int.parse(_am.text);
+
+
+                      }
+
+
+                      else{
+
+                        //print('This is more than expected');
+
+                        Navigator.pop(context);
+                      }
 
 
                     }, icon:const Icon(Icons.save),
                         label:const Text('Edit')
                     );
                   }),
-
-
-
 
             ],
           ),

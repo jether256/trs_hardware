@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../api/url/url.dart';
 import '../models/ordermodel.dart';
-import 'orders/editorder.dart';
+import 'orders/editorders/editorder.dart';
 import 'orders/orderdetails/ordedetails.dart';
 
 class Search extends StatefulWidget {
@@ -79,7 +79,7 @@ class _SearchState extends State<Search> {
       setState(() {});
     } else {
       _listHouse.forEach((element) {
-        if (element.pay_d.toLowerCase().contains(text) || element.c_am.toLowerCase().contains(text) || element.tr_id.toLowerCase().contains(text) || element.bal.toLowerCase().contains(text) || element.name.toLowerCase().contains(text) ) {
+        if ( element.c_am.toLowerCase().contains(text) || element.tr_id.toLowerCase().contains(text) || element.bal.toLowerCase().contains(text) || element.name.toLowerCase().contains(text) ) {
           pros.add(element);
         }
       });
@@ -246,7 +246,7 @@ class _SearchState extends State<Search> {
 
                               Text('Order ID:${pros[index].tr_id}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
 
-                              Text('Date:${pros[index].date}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                             // Text('Date:${pros[index].date}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                               Text('Amount:Shs${sprice}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                             ],
                           ),
@@ -276,13 +276,13 @@ class _SearchState extends State<Search> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      Row(
-                                        children: [
-                                          const Text('Payment Date: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-
-                                          Text( pros[index].pay_d,style: const TextStyle(color: Colors.black),)
-                                        ],
-                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     const Text('Payment Date: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                      //
+                                      //     Text( pros[index].pay_d,style: const TextStyle(color: Colors.black),)
+                                      //   ],
+                                      // ),
 
                                       Row(
                                         children: [

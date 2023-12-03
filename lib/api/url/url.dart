@@ -1,10 +1,15 @@
 
 class BaseUrl{
 
-  static String address="holomboko.000webhostapp.com";
+  static String address="masiko.000webhostapp.com";
 
   //authetication
   static String reg= "https://$address/api/login/register.php";
+  static String sendMail= "https://$address/api/login/confrimmail.php";
+
+  static String passVerify = "https://$address/api/login/verifyPass.php";
+  static String passReset = "https://$address/api/login/passReset.php";
+
 
 
   //products
@@ -32,9 +37,11 @@ class BaseUrl{
   static String getOrders= "https://$address/api/orders/getAllOrders.php";
 
   static String editOrders= "https://$address/api/orders/editOrder.php";
+  static String editPart= "https://$address/api/orders/editPart.php";
+  static String editPart2= "https://$address/api/orders/editPart2.php";
 
   static String editFull= "https://$address/api/orders/editFull.php";
-  static String editPart= "https://$address/api/api/orders/editPart.php";
+  //static String editPart= "https://$address/api/api/orders/editPart.php";
   static String searchOrder= "https://$address/api/orders/searchorders.php";
 
   static String date= "https://$address/api/orders/date.php";

@@ -55,21 +55,21 @@ class _OrderDetailsState extends State<OrderDetails> {
 
             final pros=value.details;
 
-            // if(value.isLoad){
-            //
-            //   return  Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
-            //
-            //       const SizedBox(height: 20,),
-            //
-            //       const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
-            //     ],
-            //   );
-            //
-            // }
+            if(value.isLoad){
+
+              return  Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(child: Image.asset('assets/images/hug.gif',height: 100,width: 100,)),
+
+                  const SizedBox(height: 20,),
+
+                  const Text('Loading.....',style: TextStyle(color: Colors.brown,fontWeight: FontWeight.bold,fontSize: 18),)
+                ],
+              );
+
+            }
 
              if(value.isNet){
 

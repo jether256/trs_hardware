@@ -36,6 +36,12 @@ class OrdersProvider extends ChangeNotifier{
   Map<String,dynamic>? _confirm;
   Map<String,dynamic>? get confirm => _confirm;
 
+  Map<String,dynamic>? _pa;
+  Map<String,dynamic>? get pa => _pa;
+
+
+  Map<String,dynamic>? _pa2;
+  Map<String,dynamic>? get pa2 => _pa2;
 
 
   var _countAll;
@@ -183,6 +189,15 @@ class OrdersProvider extends ChangeNotifier{
       getallPartCount();
       notifyListeners();
 
+      getCredit();
+      notifyListeners();
+
+      getPart();
+      notifyListeners();
+
+      getFull();
+      notifyListeners();
+
     }on SocketException catch (_) {
       isLoad = false;
       isNet = true;
@@ -250,11 +265,12 @@ class OrdersProvider extends ChangeNotifier{
 
     try {
       isNet = false;
-      // isLoad = true;
+       isLoad = true;
       notifyListeners();
 
       final response = await _api.getOderDetails(trid);
       _details = response!;
+      isLoad=false;
       notifyListeners();
 
 
@@ -402,7 +418,7 @@ class OrdersProvider extends ChangeNotifier{
 
 
       final response = await _api.EdittP(context,trid,bal);
-      _confirm=response;
+      _pa=response;
       isLoad=false;
       isNet=false;
       notifyListeners();
@@ -435,6 +451,51 @@ class OrdersProvider extends ChangeNotifier{
 
   }
 
+
+  ///edit part2
+  editP2({
+    required BuildContext context, required String trid, required String bal
+  }) async{
+
+    try{
+      isLoad=true;
+      isNet=false;
+      notifyListeners();
+
+
+      final response = await _api.EdittP2(context,trid,bal);
+      _pa2=response;
+      isLoad=false;
+      isNet=false;
+      notifyListeners();
+
+      getallCreditCount();
+      notifyListeners();
+
+      getallPaidCount();
+      notifyListeners();
+
+      getallPartCount();
+      notifyListeners();
+
+      getCredit();
+      notifyListeners();
+
+      getPart();
+      notifyListeners();
+
+      getFull();
+      notifyListeners();
+
+    }catch(e){
+
+      isLoad=false;
+      isNet=false;
+      notifyListeners();
+
+    }
+
+  }
 
   ///get date list
   getDate({required String date}) async {

@@ -8,7 +8,7 @@ import '../../constants/coloor.dart';
 import '../../encryp/enc.dart';
 import '../../providers/ordersprovider.dart';
 import '../dashboard.dart';
-import 'editorder.dart';
+import 'editorders/editorder.dart';
 import 'orderdetails/ordedetails.dart';
 
 class CreditWidget extends StatefulWidget {
@@ -174,7 +174,7 @@ class _CreditWidgetState extends State<CreditWidget> {
 
                                 Text('Order ID:${pros[index].tr_id}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
 
-                                Text('Date:${pros[index].date}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                               // Text('Date:${pros[index].date}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                                 Text('Amount:Shs${sprice}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                               ],
                             ),
@@ -204,13 +204,13 @@ class _CreditWidgetState extends State<CreditWidget> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
-                                        Row(
-                                          children: [
-                                            const Text('Payment Date: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-
-                                            Text( pros[index].pay_d,style: const TextStyle(color: Colors.black),)
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   children: [
+                                        //     const Text('Payment Date: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                        //
+                                        //     Text( pros[index].pay_d,style: const TextStyle(color: Colors.black),)
+                                        //   ],
+                                        // ),
 
                                         Row(
                                           children: [

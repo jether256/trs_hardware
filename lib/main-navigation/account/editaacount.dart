@@ -178,14 +178,14 @@ class _EditAccountState extends State<EditAccount> {
                                         if(_fomkey.currentState!.validate()) {
                                           var response = await http.post(
                                               Uri.parse(
-                                                  'https://holomboko.000webhostapp.com/api/login/edituser.php'),
+                                                  'https://masiko.000webhostapp.com/api/login/edituser.php'),
                                               headers: {
                                                 "Accept": "headers/json"
                                               },
                                               body: {
-                                                "uid": encrypt('${ID}'),
-                                                "name": encrypt(_name.text),
-                                                "email": encrypt(_ema.text),
+                                                "uid": '${ID}',
+                                                "name": _name.text,
+                                                "email": _ema.text,
                                               });
 
 

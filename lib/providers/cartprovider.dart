@@ -47,7 +47,7 @@ class CartProvider extends ChangeNotifier{
   get sumPrice => _sumPrice;
 
   confirmm({
-    required BuildContext context, required String name, required String date
+    required BuildContext context, required String name
   }) async{
 
     try{
@@ -56,7 +56,7 @@ class CartProvider extends ChangeNotifier{
       // notifyListeners();
 
 
-      final response = await _api.Konfirm(context,name,date);
+      final response = await _api.Konfirm(context,name);
       _confirm=response;
       // isLoad=false;
       // isNet=false;
@@ -83,7 +83,7 @@ class CartProvider extends ChangeNotifier{
 
 
   saveCart({
-    required BuildContext context, required String proid, required String price, required String uid
+    required BuildContext context, required String proid, required String price, required String uid, required String qty,
   }) async{
 
     try{
@@ -92,7 +92,7 @@ class CartProvider extends ChangeNotifier{
       notifyListeners();
 
 
-      final response = await _api.addCart(context,proid,price,uid);
+      final response = await _api.addCart(context,proid,price,uid,qty);
       _addcart=response;
       notifyListeners();
       // isLoad=false;

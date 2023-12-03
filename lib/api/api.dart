@@ -11,6 +11,9 @@ import 'dart:convert';
 import '../encryp/enc.dart';
 import 'package:trs_hardware/api/url/url.dart';
 
+import '../login/forget.dart';
+import '../login/login.dart';
+import '../login/loginCheck.dart';
 import '../main-navigation/cart/getCart.dart';
 import '../main-navigation/home/home.dart';
 import '../models/cartmodel.dart';
@@ -20,6 +23,224 @@ import '../models/productmodel.dart';
 
 
 class ApiCall{
+
+
+
+  ///send Mail
+  Future  sentMail( String email,BuildContext context) async {
+
+    var response = await http.post(
+      Uri.parse(
+          BaseUrl.sendMail),
+      //headers can be left out since CORS doesn't affect apps but it will affect A flutter web app,
+      //so just to be safe include them.
+      headers: {"Accept": "headers/json"},
+      body:{
+        "mail":email,
+      },
+    );
+
+
+    if(response.statusCode==200){
+
+      var userData=json.decode(response.body);
+
+      if(context.mounted){// context is needed for the navigator and snackbar to work
+
+        // check if the email already exists else register user
+        if(userData=="Ye"){
+
+
+          ///route to check email evrification code page after verification
+
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginCheck(mail:email)));
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Email Sent"),
+                backgroundColor: Colors.brown.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+        }
+
+        else if(userData=="Fail"){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Failed to send Email"),
+                backgroundColor: Colors.red.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+        }
+
+        else if(userData=="No"){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Email doesn't exist"),
+                backgroundColor: Colors.red.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+        }
+
+
+      }
+
+    }else{
+
+      return null;
+    }
+    
+  }
+
+
+
+  ///verify password function
+  Future  PassVeri( String email, String code, BuildContext context) async {
+
+    var response = await http.post(
+      Uri.parse(
+          BaseUrl.passVerify),
+      //headers can be left out since CORS doesn't affect apps but it will affect A flutter web app,
+      //so just to be safe include them.
+      headers: {"Accept": "headers/json"},
+      body:{
+        "email":email,
+        "key":code,
+      },
+    );
+
+
+    if(response.statusCode==200){
+
+      var userData=json.decode(response.body);
+
+      if(context.mounted){// context is needed for the navigator and snackbar to work
+
+        // check if the email already exists else register user
+        if(userData=="ye"){
+
+
+          ///route to password reset page after after verification
+          //Navigator.pushNamed(context,ForgotPassword.id);
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>ForgotPassword(mail:email)));
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Verification Successfully Set new Password"),
+                backgroundColor: Colors.brown.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+        }
+
+        else if(userData=="no"){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Wrong Code"),
+                backgroundColor: Colors.red.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+        }
+
+
+      }
+
+    }else{
+
+      return null;
+    }
+
+
+
+
+
+  }
+
+
+
+  ///password reset
+  Future<Map<String,dynamic>?> Reset(String password,BuildContext context, String email) async{
+
+    var response = await http.post(
+      Uri.parse(BaseUrl.passReset),
+      headers: {"Accept": "headers/json"},
+      body:{
+        "mail": email,
+        "pass": password,
+      }
+      ,
+    );
+
+    if (response.statusCode == 200) {
+
+      var userData = json.decode(response.body);
+
+
+
+
+
+      if (userData == "Yes") {
+
+        if(context.mounted){
+
+          ///route to login page after password reset
+          //Navigator.pushNamed(context, Login.id);
+          Navigator.pushReplacementNamed(context,Login.id);
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Password reset"),
+                backgroundColor: Colors.brown.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+        }
+
+      } else if(userData=="No"){
+
+
+        if(context.mounted){
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Password reset failed"),
+                backgroundColor: Colors.red.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+        }
+
+
+        print(userData);
+      }
+    }else{
+
+      return null;
+    }
+
+
+
+  }
+
+
+
+
+
 
   ///save product
   Future<Map<String,dynamic>?> ProSave(BuildContext context,String name,String desc,String price ) async{
@@ -194,14 +415,14 @@ Future<List<ProductModel>?> getPro() async {
 
 ///Cart functions
 
-  Future<Map<String,dynamic>?>  addCart(BuildContext context, String proid, String price, String uid) async{
+  Future<Map<String,dynamic>?>  addCart(BuildContext context, String proid, String price, String uid, String qty) async{
 
     var response = await http.post(
       Uri.parse(BaseUrl.addCart),
       headers: {"Accept": "headers/json"},
       body:{
         "proid":proid,
-        "quant":"1",
+        "quant":qty,
         "price":price,
         "uid":uid,
       }
@@ -224,7 +445,7 @@ Future<List<ProductModel>?> getPro() async {
                 elevation: 10, //shadow
               )
           );
-
+          Navigator.pop(context);
         }
 
       }else{
@@ -240,6 +461,7 @@ Future<List<ProductModel>?> getPro() async {
                 elevation: 10, //shadow
               )
           );
+          Navigator.pop(context);
 
           //Navigator.pushReplacementNamed(context,Dashboard.id);
         }
@@ -403,7 +625,7 @@ Future<List<ProductModel>?> getPro() async {
 
 
   ///confrim
-  Future<Map<String,dynamic>?> Konfirm(BuildContext context,String name,String date) async{
+  Future<Map<String,dynamic>?> Konfirm(BuildContext context,String name) async{
 
 
     EasyLoading.show(status: 'Saving.....');
@@ -416,9 +638,9 @@ Future<List<ProductModel>?> getPro() async {
       headers: {"Accept": "headers/json"},
       body:{
         "uid": ID,
-        "date": date,
+        // "date": date,
         "name":name,
-        "now":DateFormat('yyyy/MM/dd').format(DateTime.now())
+        // "now":DateFormat('yyyy/MM/dd').format(DateTime.now())
       }
       ,
     );
@@ -722,9 +944,6 @@ Future<List<ProductModel>?> getPro() async {
   Future<Map<String,dynamic>?> EdittP(BuildContext context, String trid, String bal) async{
 
 
-
-
-
     var response = await http.post(
       Uri.parse(BaseUrl.editPart),
       headers: {"Accept": "headers/json"},
@@ -743,17 +962,88 @@ Future<List<ProductModel>?> getPro() async {
 
         if(context.mounted){
 
-          //
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(
-          //       content: const Text("Order edited successfully"),
-          //       backgroundColor: Colors.brown.withOpacity(0.9),
-          //       elevation: 10, //shadow
-          //     )
-          // );
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Order placed successfully"),
+                backgroundColor: Colors.brown.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+
 
           Navigator.pushReplacementNamed(context,Dashboard.id);
+
           Navigator.pop(context);
+        }
+
+
+      }else{
+
+
+        if(context.mounted){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("failed to placed on"),
+                backgroundColor: Colors.red.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+          Navigator.pop(context);
+        }
+
+
+
+        print(userData);
+
+
+      }
+    }else{
+
+      return null;
+    }
+    return null;
+
+  }
+
+
+  ///edit part2
+  Future<Map<String,dynamic>?> EdittP2(BuildContext context, String trid, String bal) async{
+
+
+    var response = await http.post(
+      Uri.parse(BaseUrl.editPart2),
+      headers: {"Accept": "headers/json"},
+      body:{
+        "trid":trid,
+        "bal":bal,
+      }
+      ,
+    );
+
+    if (response.statusCode == 200) {
+
+      var userData = json.decode(response.body);
+
+      if (userData == "part") {
+
+        if(context.mounted){
+
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text("Order placed successfully"),
+                backgroundColor: Colors.brown.withOpacity(0.9),
+                elevation: 10, //shadow
+              )
+          );
+
+
+
 
         }
 

@@ -25,10 +25,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
+  final _formKey=GlobalKey<FormState>();
 
   final _formated= NumberFormat();
 
+  final _qt=TextEditingController();
 
   @override
   void initState() {
@@ -115,7 +116,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Center(child: Image.asset('assets/images/lost2.gif',height: 150,width: 150)),
+                    Center(child: Image.asset('assets/images/no_internet.png',height: 150,width: 150)),
 
                     const SizedBox(height: 20,),
 
@@ -167,7 +168,70 @@ class _HomeState extends State<Home> {
                             });
                             return IconButton(icon:const Icon(Icons.add),color: Colors.green, onPressed: () {
 
-                              auth.saveCart(context: context,proid:cats[index].id,price:decrypt(cats[index].price),uid:'$ID');
+                              // auth.saveCart(context: context,proid:cats[index].id,price:decrypt(cats[index].price),uid:'$ID');
+
+
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      content: const Text('Enter Quantity',style:TextStyle(color:Colors.black),),
+                                      actions: [
+
+
+                                        Form(
+                                          key: _formKey,
+                                          child: TextFormField(
+                                            controller: _qt,
+                                            keyboardType: TextInputType.number,
+                                            decoration: const InputDecoration(
+                                              labelText: 'Quantity',
+                                              labelStyle:TextStyle(color:Colors.black),
+                                            ),
+                                              validator: (value){
+                                                if(value!.isEmpty){
+                                                  return 'Enter quantity';
+
+                                                }
+                                                return null;
+                                              }
+                                          ),
+                                        ),
+
+                                        MaterialButton(
+                                          color: Colors.red,
+                                          textColor: Colors.white,
+                                          onPressed: () {
+
+                                       if(_formKey.currentState!.validate()){
+
+
+                                         if(_qt.text != null){
+
+                                           auth.saveCart(context: context,proid:cats[index].id,price:decrypt(cats[index].price),uid:'$ID',qty:_qt.text);
+
+
+                                         }
+
+                                       }
+
+
+
+
+                                          },
+                                          child: const Text('Confirm'),
+                                        ),
+
+
+                                      ],
+                                    );
+                                  },
+                                );
+
+
+
+
+
 
                             },);
                           }),

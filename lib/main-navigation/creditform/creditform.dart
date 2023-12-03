@@ -68,15 +68,15 @@ class _CreditFormState extends State<CreditForm> {
 
             const SizedBox(height: 20.0,),
 
-           Row(
-            children: [
-              Expanded(
-                 // child:Text(_date != null ? DateFormat('MMMM dd,yyyy').format(_date!):'Select Date'),
-                  child:Text(_date != null ? DateFormat('dd/MM/yyyy').format(_date!):'Select Payment Date'),
-              ),
-              IconButton(icon:const Icon(Icons.calendar_month), onPressed: ()=>_pickDate(),),
-            ],
-          ),
+          //  Row(
+          //   children: [
+          //     Expanded(
+          //        // child:Text(_date != null ? DateFormat('MMMM dd,yyyy').format(_date!):'Select Date'),
+          //         child:Text(_date != null ? DateFormat('dd/MM/yyyy').format(_date!):'Select Payment Date'),
+          //     ),
+          //     IconButton(icon:const Icon(Icons.calendar_month), onPressed: ()=>_pickDate(),),
+          //   ],
+          // ),
 
             Consumer<CartProvider>(
                 builder: (context, auth, child) {
@@ -87,13 +87,13 @@ class _CreditFormState extends State<CreditForm> {
                   return   ElevatedButton.icon(onPressed:(){
 
 
-                    if(_name.text != null && _date != null){
+                    if(_name.text != null ){
 
 
                       auth.confirmm(
                           context: context,
                           name:_name.text,
-                          date:DateFormat('yyyy/MM/dd').format(_date!),
+                         // date:DateFormat('yyyy/MM/dd').format(_date!),
                           //date:_date.toString(),
 
                       ).whenComplete((value){

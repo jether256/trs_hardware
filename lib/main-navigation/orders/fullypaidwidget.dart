@@ -97,8 +97,8 @@ class _FullPaidWidgetState extends State<FullPaidWidget> {
                   var s_price=int.parse(pros[index].c_am);
                   String sprice=_formated.format(s_price);
 
-                  var bal=int.parse(pros[index].c_am)-int.parse(pros[index].bal);
-                  String spricee=_formated.format(s_price);
+                  var bal=int.parse(pros[index].bal);
+                  String spricee=_formated.format(bal);
 
                   return Padding(
                     padding: const EdgeInsets.only(left: 8.0,right: 8.0,bottom:3,top: 3),
@@ -145,7 +145,7 @@ class _FullPaidWidgetState extends State<FullPaidWidget> {
 
                                 Text('Order ID:${pros[index].tr_id}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
 
-                                Text('Date:${pros[index].date}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
+                                //Text('Date:${pros[index].date}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                                 Text('Amount:Shs${sprice}',style: const TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
                               ],
                             ),
@@ -164,19 +164,19 @@ class _FullPaidWidgetState extends State<FullPaidWidget> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
                                       children: [
-                                        Row(
-                                          children: [
-                                            const Text('Payment Date: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
-
-                                            Text( pros[index].pay_d,style: const TextStyle(color: Colors.black),)
-                                          ],
-                                        ),
+                                        // Row(
+                                        //   children: [
+                                        //     const Text('Payment Date: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
+                                        //
+                                        //     Text( pros[index].pay_d,style: const TextStyle(color: Colors.black),)
+                                        //   ],
+                                        // ),
 
                                         Row(
                                           children: [
                                             const Text('Balance: ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),),
 
-                                            Flexible(child: Text('Shs ${int.parse(pros[index].c_am)-int.parse(pros[index].bal)}',style: const TextStyle(color: Colors.black),maxLines: 2,))
+                                            Flexible(child: Text('Shs ${spricee}',style: const TextStyle(color: Colors.black),maxLines: 2,))
                                           ],
                                         ),
 

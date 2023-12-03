@@ -22,7 +22,8 @@ class SearchProduct extends StatefulWidget {
 
 class _SearchProductState extends State<SearchProduct> {
 
-
+  final _formKey=GlobalKey<FormState>();
+  final _qt=TextEditingController();
 
   final _formated= NumberFormat();
 
@@ -210,7 +211,66 @@ class _SearchProductState extends State<SearchProduct> {
                           });
                           return IconButton(icon:const Icon(Icons.add),color: Colors.green, onPressed: () {
 
-                            auth.saveCart(context: context,proid:pros[index].id,price:decrypt(pros[index].price),uid:'$ID');
+                            //auth.saveCart(context: context,proid:pros[index].id,price:decrypt(pros[index].price),uid:'$ID');
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: const Text('Enter Quantity',style:TextStyle(color:Colors.black),),
+                                  actions: [
+
+
+                                    Form(
+                                      key: _formKey,
+                                      child: TextFormField(
+                                          controller: _qt,
+                                          keyboardType: TextInputType.number,
+                                          decoration: const InputDecoration(
+                                            labelText: 'Quantity',
+                                            labelStyle:TextStyle(color:Colors.black),
+                                          ),
+                                          validator: (value){
+                                            if(value!.isEmpty){
+                                              return 'Enter quantity';
+
+                                            }
+                                            return null;
+                                          }
+                                      ),
+                                    ),
+
+                                    MaterialButton(
+                                      color: Colors.red,
+                                      textColor: Colors.white,
+                                      onPressed: () {
+
+                                        if(_formKey.currentState!.validate()){
+
+
+                                          if(_qt.text != null){
+
+                                            auth.saveCart(context: context,proid:pros[index].id,price:decrypt(pros[index].price),uid:'$ID',qty:_qt.text);
+
+
+                                          }
+
+                                        }
+
+
+
+
+                                      },
+                                      child: const Text('Confirm'),
+                                    ),
+
+
+                                  ],
+                                );
+                              },
+                            );
+
+
 
                           },);
                         }),

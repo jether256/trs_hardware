@@ -7,6 +7,7 @@ import 'dart:convert';
 
 import '../encryp/enc.dart';
 import '../main-navigation/dashboard.dart';
+import 'checkmail.dart';
 
 class Login extends StatefulWidget {
 
@@ -34,9 +35,9 @@ class _LoginState extends State<Login> {
 
   login() async {
 
-    var response=await http.post(Uri.parse('https://holomboko.000webhostapp.com/api/login/login.php'),
+    var response=await http.post(Uri.parse('https://masiko.000webhostapp.com/api/login/login.php'),
 
-        body:{"mail":encrypt(_ema.text),"pass":encrypt(_pass.text),"type":encrypt('admin'),});
+        body:{"mail":_ema.text,"pass":_pass.text,"type":'admin',});
 
     if (response.statusCode == 200) {
 
@@ -44,11 +45,11 @@ class _LoginState extends State<Login> {
 
       //Set json data to string variables
 
-      String ID=userData['ID'];
-      String name=decrypt(userData['name']);
-      String email=decrypt(userData['email']);
-      // String pass=decrypt(userData['pass']);
-      String type=decrypt(userData['type']);
+      // String ID=userData['ID'];
+      // String name=userData['name'];
+      // String email=userData['email'];
+      // // String pass=decrypt(userData['pass']);
+      // String type=userData['type'];
 
 
       if (userData == "ERROR") {
@@ -71,11 +72,17 @@ class _LoginState extends State<Login> {
 
         //Pass string variables into shared prefrences
         SharedPreferences sharedPreferences= await SharedPreferences.getInstance();
-        sharedPreferences.setString("ID",ID);
-        sharedPreferences.setString("name",name);
-        sharedPreferences.setString("email", email);
+        // sharedPreferences.setString("ID",ID);
+        // sharedPreferences.setString("name",name);
+        // sharedPreferences.setString("email", email);
+        // // sharedPreferences.setString("pass", pass);
+        // sharedPreferences.setString("type", type);
+
+        sharedPreferences.setString("ID",userData['ID']);
+        sharedPreferences.setString("name",userData['name']);
+        sharedPreferences.setString("email", userData['email']);
         // sharedPreferences.setString("pass", pass);
-        sharedPreferences.setString("type", type);
+        sharedPreferences.setString("type", userData['type']);
 
         String? UID=sharedPreferences.getString("ID");
 
@@ -145,7 +152,7 @@ class _LoginState extends State<Login> {
                       //mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Align(
-                          alignment: Alignment.center,
+                            alignment: Alignment.center,
                             child: Icon(Icons.hardware,size: 70,color: Colors.brown,)
                         ),
 
@@ -240,9 +247,16 @@ class _LoginState extends State<Login> {
 
                     const SizedBox(height: 20,),
 
-                    const Align(
+                    InkWell(
+                      onTap: (){
+
+                        Navigator.pushReplacementNamed(context,CheckMail.id);
+
+                      },
+                      child: const Align(
                         alignment: Alignment.centerRight,
                         child:Text('Forgot password',style: TextStyle(color: Colors.brown),),
+                      ),
                     ),
                     const SizedBox(height: 20,),
                     MaterialButton(
@@ -253,7 +267,7 @@ class _LoginState extends State<Login> {
                         login();
 
                       },
-                    child:const Text('Login',style: TextStyle(color: Colors.white),),)
+                      child:const Text('Login',style: TextStyle(color: Colors.white),),)
 
                   ],
                 ),
